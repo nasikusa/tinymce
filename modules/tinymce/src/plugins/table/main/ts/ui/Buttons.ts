@@ -175,6 +175,100 @@ const addButtons = (editor: Editor, selectionTargets: SelectionTargets, clipboar
     icon: 'table'
   });
 
+  editor.ui.registry.addMenuButton('rowclipboardactions', {
+    icon: 'cut-row',
+    tooltip: 'Row clipboard actions',
+    fetch: (callback) => {
+      callback([
+        {
+          type: 'menuitem',
+          text: 'Cut row',
+          icon: 'cut-row',
+          onAction: () => {
+            editor.execCommand('mceTableCutRow');
+          }
+        },
+        {
+          type: 'menuitem',
+          text: 'Copy row',
+          icon: 'duplicate-row',
+          onAction: () => {
+            editor.execCommand('mceTableCopyRow');
+          }
+        },
+        {
+          type: 'togglemenuitem',
+          text: 'Paste row before',
+          icon: 'paste-row-before',
+          onAction: () => {
+            editor.execCommand('mceTablePasteRowBefore');
+          },
+          onSetup: (buttonApi) => {
+            buttonApi.setDisabled(editor.plugins.table.getClipboardRows().length === 0);
+          }
+        },
+        {
+          type: 'togglemenuitem',
+          text: 'Paste row after',
+          icon: 'paste-row-after',
+          onAction: () => {
+            editor.execCommand('mceTablePasteRowAfter');
+          },
+          onSetup: (buttonApi) => {
+            buttonApi.setDisabled(editor.plugins.table.getClipboardRows().length === 0);
+          }
+        },
+      ]);
+    }
+  });
+
+  editor.ui.registry.addMenuButton('colclipboardactions', {
+    icon: 'cut-column',
+    tooltip: 'Column clipboard actions',
+    fetch: (callback) => {
+      callback([
+        {
+          type: 'menuitem',
+          text: 'Cut column',
+          icon: 'cut-column',
+          onAction: () => {
+            editor.execCommand('mceTableCutCol');
+          }
+        },
+        {
+          type: 'menuitem',
+          text: 'Copy column',
+          icon: 'duplicate-column',
+          onAction: () => {
+            editor.execCommand('mceTableCopyCol');
+          }
+        },
+        {
+          type: 'togglemenuitem',
+          text: 'Paste column before',
+          icon: 'paste-column-before',
+          onAction: () => {
+            editor.execCommand('mceTablePasteColBefore');
+          },
+          onSetup: (buttonApi) => {
+            buttonApi.setDisabled(editor.plugins.table.getClipboardCols().length === 0);
+          }
+        },
+        {
+          type: 'togglemenuitem',
+          text: 'Paste column after',
+          icon: 'paste-column-after',
+          onAction: () => {
+            editor.execCommand('mceTablePasteColAfter');
+          },
+          onSetup: (buttonApi) => {
+            buttonApi.setDisabled(editor.plugins.table.getClipboardCols().length === 0);
+          }
+        },
+      ]);
+    }
+  });
+
   const tableClassList = getTableClassList(editor);
 
   if (tableClassList.length === 0) {
