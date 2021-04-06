@@ -182,7 +182,7 @@ const addButtons = (editor: Editor, selectionTargets: SelectionTargets, clipboar
   } else {
     editor.ui.registry.addMenuButton('tableclass', {
       icon: 'table-classes',
-      tooltip: 'Table classes',
+      tooltip: 'Table styles',
       fetch: (callback) => {
         const customElements = Arr.map(tableClassList, (value) => {
           const item: Menu.ToggleMenuItemSpec = {
@@ -199,7 +199,7 @@ const addButtons = (editor: Editor, selectionTargets: SelectionTargets, clipboar
 
         const defaultClassActions: Menu.MenuItemSpec[] = [
           {
-            text: 'Add All',
+            text: 'Add all',
             type: 'menuitem',
             onAction: (_api: Menu.MenuItemInstanceApi) => {
               Arr.each(tableClassList, (entry) => {
@@ -211,7 +211,7 @@ const addButtons = (editor: Editor, selectionTargets: SelectionTargets, clipboar
             },
           },
           {
-            text: 'Remove All',
+            text: 'Remove all',
             type: 'menuitem',
             onAction: (_api: Menu.MenuItemInstanceApi) => {
               Arr.each(tableClassList, (entry) => {
@@ -239,7 +239,7 @@ const addButtons = (editor: Editor, selectionTargets: SelectionTargets, clipboar
   if (tableCellClassList.length !== 0) {
     editor.ui.registry.addMenuButton('tablecellclass', {
       icon: 'table-cell-classes',
-      tooltip: 'Cell classes',
+      tooltip: 'Cell styles',
       fetch: (callback) => {
         const customElements = Arr.map(tableCellClassList, (value) => {
           const item: Menu.ToggleMenuItemSpec = {
@@ -256,7 +256,7 @@ const addButtons = (editor: Editor, selectionTargets: SelectionTargets, clipboar
 
         const defaultClassActions: Menu.MenuItemSpec[] = [
           {
-            text: 'Add All',
+            text: 'Add all',
             type: 'menuitem',
             onAction: (_api: Menu.MenuItemInstanceApi) => {
               Arr.each(tableCellClassList, (entry) => {
@@ -268,7 +268,7 @@ const addButtons = (editor: Editor, selectionTargets: SelectionTargets, clipboar
             },
           },
           {
-            text: 'Remove All',
+            text: 'Remove all',
             type: 'menuitem',
             onAction: (_api: Menu.MenuItemInstanceApi) => {
               Arr.each(tableCellClassList, (entry) => {
