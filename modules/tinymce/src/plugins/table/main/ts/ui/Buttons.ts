@@ -278,7 +278,7 @@ const addButtons = (editor: Editor, selectionTargets: SelectionTargets, clipboar
       icon: 'table-classes',
       tooltip: 'Table styles',
       fetch: (callback) => {
-        const customElements = Arr.map(tableClassList, (value) => {
+        callback(Arr.map(tableClassList, (value) => {
           const item: Menu.ToggleMenuItemSpec = {
             text: value.title,
             type: 'togglemenuitem',
@@ -289,40 +289,7 @@ const addButtons = (editor: Editor, selectionTargets: SelectionTargets, clipboar
           };
 
           return item;
-        });
-
-        const defaultClassActions: Menu.MenuItemSpec[] = [
-          {
-            text: 'Add all',
-            type: 'menuitem',
-            onAction: (_api: Menu.MenuItemInstanceApi) => {
-              Arr.each(tableClassList, (entry) => {
-                editor.execCommand('mceTableChangeClass', false, {
-                  class: entry.value,
-                  remove: false
-                });
-              });
-            },
-          },
-          {
-            text: 'Remove all',
-            type: 'menuitem',
-            onAction: (_api: Menu.MenuItemInstanceApi) => {
-              Arr.each(tableClassList, (entry) => {
-                editor.execCommand('mceTableChangeClass', false, {
-                  class: entry.value,
-                  remove: true
-                });
-              });
-            },
-          }
-        ];
-
-        const separator: Menu.SeparatorMenuItemSpec = {
-          type: 'separator'
-        };
-
-        callback([].concat(defaultClassActions, separator, customElements));
+        }));
       },
       onSetup: selectionTargets.onSetupTable
     });
@@ -335,7 +302,7 @@ const addButtons = (editor: Editor, selectionTargets: SelectionTargets, clipboar
       icon: 'table-cell-classes',
       tooltip: 'Cell styles',
       fetch: (callback) => {
-        const customElements = Arr.map(tableCellClassList, (value) => {
+        callback(Arr.map(tableCellClassList, (value) => {
           const item: Menu.ToggleMenuItemSpec = {
             text: value.title,
             type: 'togglemenuitem',
@@ -346,40 +313,7 @@ const addButtons = (editor: Editor, selectionTargets: SelectionTargets, clipboar
           };
 
           return item;
-        });
-
-        const defaultClassActions: Menu.MenuItemSpec[] = [
-          {
-            text: 'Add all',
-            type: 'menuitem',
-            onAction: (_api: Menu.MenuItemInstanceApi) => {
-              Arr.each(tableCellClassList, (entry) => {
-                editor.execCommand('mceTableChangeCellClass', false, {
-                  class: entry.value,
-                  remove: false
-                });
-              });
-            },
-          },
-          {
-            text: 'Remove all',
-            type: 'menuitem',
-            onAction: (_api: Menu.MenuItemInstanceApi) => {
-              Arr.each(tableCellClassList, (entry) => {
-                editor.execCommand('mceTableChangeCellClass', false, {
-                  class: entry.value,
-                  remove: true
-                });
-              });
-            },
-          }
-        ];
-
-        const separator: Menu.SeparatorMenuItemSpec = {
-          type: 'separator'
-        };
-
-        callback([].concat(defaultClassActions, separator, customElements));
+        }));
       },
       onSetup: selectionTargets.onSetupCellOrRow
     });
@@ -460,7 +394,7 @@ const addButtons = (editor: Editor, selectionTargets: SelectionTargets, clipboar
   const tableCellBorderColors = getTableCellBorderColors(editor);
   editor.ui.registry.addMenuButton('tablecellbordercolor', {
     icon: 'cell-border-color',
-    tooltip: 'Border Color',
+    tooltip: 'Border color',
     fetch: (callback) => {
       callback([
         {

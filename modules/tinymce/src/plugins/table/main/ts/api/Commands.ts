@@ -128,7 +128,7 @@ const registerCommands = (editor: Editor, actions: TableActions, cellSelection: 
   };
 
   const toggleTableClass = (_ui: boolean, requestedClass: string) => {
-    getSelectionStartCell(editor).each((startCell) => {
+    getSelectionStartCellOrCaption(editor).each((startCell) => {
       TableLookup.table(startCell, isRoot).filter(Fun.not(isRoot)).each((table) => {
         if (Class.has(table, requestedClass)) {
           Class.remove(table, requestedClass);
