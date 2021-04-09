@@ -33,7 +33,7 @@ export interface SelectionTargets {
   readonly resetTargets: () => void;
   readonly targets: () => Optional<RunOperation.CombinedTargets>;
   readonly onSetupTableWithCaption: (api: Toolbar.ToolbarToggleButtonInstanceApi) => () => void;
-  readonly onSetupTableHeaders: (useRow: boolean) => (api: Toolbar.ToolbarToggleButtonInstanceApi) => () => void;
+  readonly onSetupTableHeaders: (api: Toolbar.ToolbarToggleButtonInstanceApi) => () => void;
 }
 
 interface ExtractedSelectionDetails {
@@ -144,74 +144,20 @@ export const getSelectionTargets = (editor: Editor, selections: Selections): Sel
   const onSetupCellOrRow = (api: UiApi) => onSetup(api, (targets) => isCaption(targets.element));
   const onSetupColumn = (lockedDisable: LockedDisable) => (api: UiApi) => onSetup(api, (targets) => isCaption(targets.element) || isDisabledFromLocked(lockedDisable));
 
-  const onSetupTableHeaders = (useRow: boolean) => {
-    return (api: Toolbar.ToolbarToggleButtonInstanceApi): () => void => {
-      return onSetupWithToggle(
-        api,
-        (targets) => {
-          return isCaption(targets.element);
-        },
-        (targets) => {
-          const fullSelection = () => {
-            const tableOpt = TableLookup.table(targets.element);
-            return tableOpt.map((table): boolean => {
-              const warehouse = Warehouse.fromTable(table);
+  const onSetupTableHeaders = (api: Toolbar.ToolbarToggleButtonInstanceApi): () => void => {
+    return onSetupWithToggle(
+      api,
+      (targets) => {
+        return isCaption(targets.element);
+      },
+      (targets) => {
+        const cellCountsAsHeader = Arr.forall(targets.selection, (element) => {
+          return (element.dom as HTMLElement).nodeName.toLowerCase() === 'th' || (element.dom as HTMLElement).parentElement.parentElement.nodeName.toLowerCase() === 'thead';
+        });
 
-              const rows: number[] = [];
-              const columns: number[] = [];
-              const selectedCells: Structs.DetailExt[] = [];
-
-              Arr.each(warehouse.all, (struct) => {
-                Arr.each(struct.cells, (cellStruct) => {
-                  const containsElement = Arr.exists(targets.selection, (sugar) => {
-                    return sugar.dom === cellStruct.element.dom;
-                  });
-
-                  if (containsElement) {
-                    selectedCells.push(cellStruct);
-
-                    if (!Arr.contains(rows, cellStruct.row)) {
-                      rows.push(cellStruct.row);
-                    }
-
-                    if (!Arr.contains(columns, cellStruct.row)) {
-                      columns.push(cellStruct.column);
-                    }
-                  }
-                });
-              });
-
-              if (useRow) {
-                return Arr.forall(rows, (index) => {
-                  return Arr.forall(warehouse.all[index].cells, (requiredCell) => {
-                    return Arr.contains(selectedCells, requiredCell);
-                  });
-                });
-              } else {
-                let hasAll = true;
-
-                Arr.each(warehouse.all, (row) => {
-                  Arr.each(row.cells, (cell) => {
-                    if (Arr.contains(columns, cell.column)) {
-                      if (!Arr.contains(selectedCells, cell)) {
-                        hasAll = false;
-                      }
-                    }
-                  });
-                });
-
-                return hasAll;
-              }
-            }).getOr(false);
-          };
-          const cellCountsAsHeader = Arr.forall(targets.selection, (element) => {
-            return (element.dom as HTMLElement).nodeName.toLowerCase() === 'th' || (element.dom as HTMLElement).parentElement.parentElement.nodeName.toLowerCase() === 'thead';
-          });
-
-          return cellCountsAsHeader && fullSelection();
-        }
-      );
-    };
+        return cellCountsAsHeader;
+      }
+    );
   };
 
   const onSetupPasteable = (getClipboardData: () => Optional<SugarElement[]>) => (api: UiApi) =>
