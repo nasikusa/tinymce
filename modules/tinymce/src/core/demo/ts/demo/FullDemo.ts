@@ -30,6 +30,7 @@ export default () => {
   const settings: RawEditorSettings = {
     skin_url: '../../../../js/tinymce/skins/ui/oxide',
     content_css: '../../../../js/tinymce/skins/content/default/content.css',
+    content_style: '.testA { background-color: red } .testB { color: green }',
     images_upload_url: 'd',
     selector: 'textarea',
     // rtl_ui: true,
@@ -51,31 +52,23 @@ export default () => {
     ],
     table_class_list: [
       {
-        title: 'Speciål',
-        value: 'sPECIÅL'
+        title: 'testA',
+        value: 'testA'
       },
       {
-        title: 'Täble',
-        value: 'tÄBLE'
-      },
-      {
-        title: 'Clöss',
-        value: 'cLÖSS'
-      },
+        title: 'testB',
+        value: 'testB'
+      }
     ],
     table_cell_class_list: [
       {
-        title: 'Måre',
-        value: 'mÅRE'
+        title: 'testA',
+        value: 'testA'
       },
       {
-        title: 'Clässes',
-        value: 'cLÄSSES'
-      },
-      {
-        title: 'Höre',
-        value: 'hÖRE'
-      },
+        title: 'testB',
+        value: 'testB'
+      }
     ],
     // rtl_ui: true,
     add_unload_trigger: false,
@@ -85,6 +78,7 @@ export default () => {
     // */
     toolbar: 'tableclass tablecellclass tablecellvalign tablecaption tablecellbackgroundcolor tablecellbordercolor tablecellborderwidth tablecellborderstyle tablecolheader tablerowheader tablecolprops',
     contextmenu: 'link linkchecker image imagetools table lists spellchecker configurepermanentpen', // */
+    table_toolbar: 'tableprops tabledelete | tableinsertrowbefore tableclass tablecellclass tablerowclass tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol',
 
     toolbar_mode: 'floating',
     /*  table_border_widths: [

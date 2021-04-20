@@ -27,16 +27,12 @@ const cellFormats = {
   },
   tablecellclass: {
     selector: 'td,th',
-    attributes: {
-      class: '%value'
-    },
+    classes: [ '%value' ],
     remove_similar: true
   },
   tableclass: {
     selector: 'table',
-    attributes: {
-      class: '%value'
-    },
+    classes: [ '%value' ],
     remove_similar: true
   },
   tablecellborderstyle: {
