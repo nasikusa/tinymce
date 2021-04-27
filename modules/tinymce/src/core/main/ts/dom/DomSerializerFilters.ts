@@ -27,7 +27,8 @@ const register = (htmlParser: DomParser, settings: DomSerializerSettings, dom: D
   });
 
   // Convert move data-mce-src, data-mce-href and data-mce-style into nodes or process them if needed
-  htmlParser.addAttributeFilter('src,href,style', function (nodes, name) {
+  // data-mce-href -> hrefのコンバートのみ止めるように変更
+  htmlParser.addAttributeFilter('src,style', function (nodes, name) {
     let i = nodes.length, node, value;
     const internalName = 'data-mce-' + name;
     const urlConverter = settings.url_converter;

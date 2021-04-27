@@ -138,7 +138,8 @@ const createParser = function (editor: Editor): DomParser {
   const parser = DomParser(mkParserSettings(editor), editor.schema);
 
   // Convert src and href into data-mce-src, data-mce-href and data-mce-style
-  parser.addAttributeFilter('src,href,style,tabindex', function (nodes, name) {
+  // href -> data-mce-hrefへのコンバートのみ止めるように変更
+  parser.addAttributeFilter('src,style,tabindex', function (nodes, name) {
     let i = nodes.length, node: AstNode, value: string;
     const dom = editor.dom;
     const internalName = 'data-mce-' + name;
